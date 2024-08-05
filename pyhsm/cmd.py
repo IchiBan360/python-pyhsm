@@ -62,6 +62,8 @@ class YHSM_Cmd():
             cmd_buf = struct.pack('BB', len(self.payload) + 1, self.command)
         else:
             cmd_buf = bytes([self.command])
+        if not isinstance(self.payload, (bytes, bytearray)):
+            self.payload = self.payload.encode()
         cmd_buf += self.payload
         debug_info = None
         unlock = self.stick.acquire()
