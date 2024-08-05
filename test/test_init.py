@@ -6,37 +6,39 @@ import sys
 import unittest
 import pyhsm
 
-import test_aead
-import test_aes_ecb
-import test_basics
-import test_buffer
-import test_db
-import test_hmac
-import test_oath
-import test_otp_validate
-import test_stick
-import test_util
-import test_yubikey_validate
-import test_misc
-import test_soft_hsm
+from . import test_aead
+from . import test_aes_ecb
+from . import test_basics
+from . import test_buffer
+from . import test_db
+from . import test_hmac
+from . import test_oath
+from . import test_otp_validate
+from . import test_stick
+from . import test_util
+from . import test_yubikey_validate
+from . import test_misc
+from . import test_soft_hsm
+from . import configure_hsm
 
-test_modules = [test_aead,
-                test_aes_ecb,
-                test_basics,
-                test_buffer,
-                test_db,
-                test_hmac,
-                test_oath,
-                test_otp_validate,
-                test_stick,
-                test_util,
-                test_yubikey_validate,
-                test_misc,
-                test_soft_hsm,
+test_modules = [#configure_hsm,
+                test_aead, #ok
+                test_aes_ecb, #ok
+                test_basics, #ok
+                test_buffer, #ok
+                test_db, #ok
+                test_hmac, #ok
+                test_oath, #ok
+                test_otp_validate, #ok
+                test_stick, #ok
+                test_util, #ok
+                test_yubikey_validate, #ok
+                test_misc, #ok
+                test_soft_hsm, #kazkas blogai su crypto, ziuret kaip counteri pakeist i dict(able) objecta, nes kazkodel baitai netinka
                 ]
 
 # special, should not be addded to test_modules
-import configure_hsm
+
 
 
 def suite():
@@ -52,9 +54,9 @@ def suite():
 
     # Check if we have a YubiHSM present, and start with locking it's keystore
     # XXX produce a better error message than 'error: None' when initializing fails
-    hsm = pyhsm.YHSM(device = os.getenv('YHSM_DEVICE', '/dev/ttyACM0'))
+    hsm = pyhsm.YHSM(device = os.getenv('YHSM_DEVICE', '/dev/tty.usbmodem25142549281'))
     try:
-        hsm.unlock("BADPASSPHRASE99")
+        hsm.unlock(b"BADPASSPHRASE99")
     except pyhsm.exception.YHSM_CommandFailed as e:
         if hsm.version.have_key_store_decrypt():
             if e.status != pyhsm.defines.YSM_MISMATCH:
