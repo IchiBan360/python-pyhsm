@@ -54,7 +54,7 @@ def suite():
 
     # Check if we have a YubiHSM present, and start with locking it's keystore
     # XXX produce a better error message than 'error: None' when initializing fails
-    hsm = pyhsm.YHSM(device = os.getenv('YHSM_DEVICE', '/dev/tty.usbmodem25142549281'))
+    hsm = pyhsm.YHSM(device = os.getenv('YHSM_DEVICE', '/dev/ttyACM0'))
     try:
         hsm.unlock(b"BADPASSPHRASE99")
     except pyhsm.exception.YHSM_CommandFailed as e:
