@@ -102,14 +102,14 @@ class YHSM_KSMRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(val_res)
-            self.wfile.write("\n")
+            self.wfile.write(bytes(val_res, 'utf-8'))
+            self.wfile.write(bytes("\n", 'utf-8'))
         elif self.stats_url and self.path == self.stats_url:
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             for key in stats:
-                self.wfile.write("%s %d\n" % (key, stats[key]))
+                self.wfile.write(bytes("%s %d\n" % (key, stats[key]), 'utf-8'))
         else:
             self.log_error("Bad URL '%s' - I'm serving '%s' (responding 403)" % (self.path, self.serve_url))
             self.send_response(403, 'Forbidden')
