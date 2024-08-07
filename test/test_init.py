@@ -21,24 +21,23 @@ from . import test_misc
 from . import test_soft_hsm
 from . import configure_hsm
 
-test_modules = [#configure_hsm,
-                test_aead, #ok
-                test_aes_ecb, #ok
-                test_basics, #ok
-                test_buffer, #ok
-                test_db, #ok
-                test_hmac, #ok
-                test_oath, #ok
-                test_otp_validate, #ok
-                test_stick, #ok
-                test_util, #ok
-                test_yubikey_validate, #ok
-                test_misc, #ok
-                test_soft_hsm, #kazkas blogai su crypto, ziuret kaip counteri pakeist i dict(able) objecta, nes kazkodel baitai netinka
+test_modules = [test_aead, 
+                test_aes_ecb, 
+                test_basics, 
+                test_buffer, 
+                test_db, 
+                test_hmac, 
+                test_oath, 
+                test_otp_validate, 
+                test_stick, 
+                test_util, 
+                test_yubikey_validate, 
+                test_misc, 
+                test_soft_hsm, 
                 ]
 
 # special, should not be addded to test_modules
-
+import configure_hsm
 
 
 def suite():
