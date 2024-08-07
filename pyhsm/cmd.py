@@ -137,8 +137,8 @@ class YHSM_Cmd():
         for this in lines:
             if re.match('^(NO_CFG|WSAPI|HSM).*> .*', this):
                 raise pyhsm.exception.YHSM_Error('YubiHSM is in configuration mode')
-        raise pyhsm.exception.YHSM_Error('Unknown response from serial device %s, %s : "%s"' \
-                                             % (self.stick.device, res, len(res.encode())))
+        raise pyhsm.exception.YHSM_Error('Unknown response from serial device %s : "%s"' \
+                                             % (self.stick.device, res()))
 
     def parse_result(self, data):
         """
