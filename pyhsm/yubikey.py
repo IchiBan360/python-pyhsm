@@ -125,12 +125,16 @@ def split_id_otp(from_key):
     @returns: public_id and OTP
     @rtype: tuple of string
     """
-    if len(from_key) > 16:
-        public_id, otp = from_key[:-16], from_key[-16:]
-    elif len(from_key) == 16:
+    if type(from_key) == bytes:
+        from_key_len = 16
+    else:
+        from_key_len = 32
+    if len(from_key) > from_key_len:
+        public_id, otp = from_key[:-from_key_len], from_key[-from_key_len:]
+    elif len(from_key) == from_key_len:
         public_id = b''
         otp = from_key
     else:
-        raise pyhsm.exception.YHSM_Error("Bad from_key length %i < 16 : %s" \
-                                       % (len(from_key), from_key))
+        raise pyhsm.exception.YHSM_Error("Bad from_key length %i < %i : %s" \
+                                       % (len(from_key), from_key_len, from_key))
     return public_id, otp
